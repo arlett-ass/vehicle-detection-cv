@@ -1,0 +1,17 @@
+# Dependencias
+node_modules/
+
+# Configuración local
+.env
+.env.*
+!.env.example
+
+# Archivos temporales
+*.log
+.DS_Store
+Thumbs.db
+
+# Restos de entornos Python
+.venv/
+venv/
+__pycache__/
