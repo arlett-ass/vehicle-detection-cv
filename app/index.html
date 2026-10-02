@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detección de vehículos</title>
+  <link rel="stylesheet" href="./src/css/styles.css">
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Detección de vehículos</h1>
+      <p>
+        Prototipo de visión por computadora para contar
+        vehículos visibles en fotografías.
+      </p>
+    </header>
+
+    <section class="panel" aria-labelledby="upload-title">
+      <h2 id="upload-title">Seleccionar fotografía</h2>
+
+      <label for="image-input">Imagen en formato JPG o PNG</label>
+      <input
+        id="image-input"
+        type="file"
+        accept="image/jpeg,image/png"
+      >
+
+      <p id="status" role="status">
+        Selecciona una imagen para visualizarla.
+      </p>
+
+      <img
+        id="preview"
+        alt="Fotografía seleccionada para el análisis"
+        hidden
+      >
+    </section>
+
+    <section class="panel">
+      <h2>Estado del proyecto</h2>
+      <p>
+        La carga y visualización están disponibles.
+        La detección y el conteo están pendientes de implementar.
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="./src/js/app.js"></script>
+</body>
+</html>

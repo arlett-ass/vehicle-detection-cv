@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+.container {
+  width: min(960px, 100%);
+  margin: 0 auto;
+  padding: 24px;
+}
+
+header {
+  margin-bottom: 24px;
+}
+
+.panel {
+  margin-bottom: 20px;
+  padding: 24px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
+
+label {
+  display: block;
+  margin-bottom: 12px;
+}
+
+input {
+  max-width: 100%;
+}
+
+#status {
+  line-height: 1.5;
+}
+
+#preview {
+  max-width: 100%;
+  height: auto;
+  margin-top: 16px;
+  border-radius: 8px;
+}
+
+[hidden] {
+  display: none !important;
+}
