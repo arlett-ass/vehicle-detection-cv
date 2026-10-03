@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prueba real del detector de Eddie</title>
+<style>
+  body { font: 16px system-ui; max-width: 1000px; margin: 30px auto; padding: 16px; }
+  button { padding: 12px; } pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+  img { max-width: 100%; max-height: 440px; }
+</style>
+<h1>Prueba real del detector</h1>
+<p>Prueba independiente de counter y renderer. Descarga bibliotecas, pesos y dos
+fotografías públicas. Compara umbrales 0.3, 0.5 y 0.7, y límites 20, 100 y 200.</p>
+<p>Fuentes: <a href="https://commons.wikimedia.org/wiki/File:Trafficjam.jpg">Tráfico (U.S. Census Bureau, dominio público)</a>
+y <a href="https://github.com/tensorflow/tfjs-models/blob/master/coco-ssd/demo/image2.jpg">perros (demo oficial de COCO-SSD)</a>.
+Las fotografías se consultan desde sus fuentes, no se incluyen copias en el repositorio.</p>
+<button id="run" disabled>Ejecutar prueba real</button>
+<p id="status" role="status">Cargando bibliotecas de prueba...</p>
+<img id="photo" alt="Fotografía de la prueba actual" hidden>
+<pre id="results"></pre>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
+<script type="module">
+  import { loadModel, detectVehicles, MAX_NUM_BOXES } from "../app/src/js/detector.js";
+  const button = document.querySelector("#run");
+  const status = document.querySelector("#status");
+  const output = document.querySelector("#results");
+  const preview = document.querySelector("#photo");
+  const vehicles = new Set(["car", "motorcycle", "bus", "truck"]);
+  button.disabled = false;
+  status.textContent = "Lista para iniciar. Requiere conexión a internet.";
+  const sources = [
+    ["trafico", "https://upload.wikimedia.org/wikipedia/commons/8/8f/Trafficjam.jpg"],
+    ["sin-vehiculos", "https://raw.githubusercontent.com/tensorflow/tfjs-models/master/coco-ssd/demo/image2.jpg"],
+  ];
+  function counts(detections) {
+    const result = { car: 0, motorcycle: 0, bus: 0, truck: 0, total: detections.length };
+    for (const item of detections) result[item.class]++;
+    return result;
+  }
+  button.addEventListener("click", async () => {
+    button.disabled = true;
+    const report = { date: new Date().toISOString(), userAgent: navigator.userAgent, cases: [] };
+    try {
+      status.textContent = "Cargando el modelo real...";
+      const first = loadModel();
+      report.sharedPromise = first === loadModel();
+      const model = await first;
+      report.sameModel = model === await loadModel();
+      report.tensorflow = tf.version.tfjs;
+      report.cocoSsd = cocoSsd.version;
+      report.backend = tf.getBackend();
+      report.maxNumBoxes = MAX_NUM_BOXES;
+      for (const [name, url] of sources) {
+        status.textContent = `Analizando ${name}...`;
+        const image = new Image();
+        image.crossOrigin = "anonymous";
+        image.src = url;
+        await image.decode();
+        preview.src = url;
+        preview.hidden = false;
+        const item = { name, source: url, width: image.naturalWidth, height: image.naturalHeight, thresholds: [], limits: [] };
+        for (const threshold of [0.3, 0.5, 0.7]) {
+          const start = performance.now();
+          const detections = await detectVehicles(image, threshold);
+          item.thresholds.push({ threshold, counts: counts(detections),
+            milliseconds: Math.round(performance.now() - start), detections });
+        }
+        if (name === "trafico") {
+          for (const maximum of [20, 100, 200]) {
+            const raw = await model.detect(image, maximum, 0.5);
+            item.limits.push({ maximum, allClasses: raw.length,
+              counts: counts(raw.filter((p) => vehicles.has(p.class) && p.score >= 0.5)) });
+          }
+          const repeated = await detectVehicles(image);
+          item.repeatMatches = JSON.stringify(repeated) === JSON.stringify(item.thresholds[1].detections);
+        }
+        report.cases.push(item);
+        output.textContent = JSON.stringify(report, null, 2);
+      }
+      status.textContent = "Prueba real terminada. Los conteos no son medidas de precisión.";
+    } catch (error) {
+      report.error = error.message;
+      report.cause = error.cause?.message;
+      status.textContent = "Falló la prueba: " + error.message;
+    } finally {
+      output.textContent = JSON.stringify(report, null, 2);
+      button.disabled = false;
+    }
+  });
+</script>
+</html>
