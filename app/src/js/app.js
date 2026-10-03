@@ -10,6 +10,19 @@ const imageInput = document.querySelector("#image-input");
 const preview = document.querySelector("#preview");
 const statusElement = document.querySelector("#status");
 
+const analyzeButton = document.querySelector("#analyze-button");
+const canvas = document.querySelector("#detection-canvas");
+
+const countElements = {
+  car: document.querySelector("#count-car"),
+  motorcycle: document.querySelector("#count-motorcycle"),
+  bus: document.querySelector("#count-bus"),
+  truck: document.querySelector("#count-truck"),
+  total: document.querySelector("#count-total"),
+};
+
+let analysisInProgress = false;
+
 const ALLOWED_TYPES = new Set(["image/jpeg", "image/png"]);
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
@@ -17,6 +30,9 @@ const STATES = Object.freeze({
   EMPTY: "sin-imagen",
   LOADING_IMAGE: "cargando-imagen",
   IMAGE_READY: "imagen-lista",
+  LOADING_MODEL: "cargando-modelo",
+  ANALYZING: "analizando",
+  FINISHED: "terminado",
   ERROR: "error",
 });
 
@@ -31,8 +47,39 @@ let selectionId = 0;
  */
 function setState(state, message) {
   currentState = state;
-  statusElement.dataset.state = currentState;
+  statusElement.dataset.state = state;
   statusElement.textContent = message;
+
+  analyzeButton.disabled = currentImage === null || analysisInProgress;
+  imageInput.disabled = analysisInProgress;
+}
+
+/**
+ * Retira los resultados anteriores sin borrar la fotografía original.
+ */
+function resetResults() {
+  canvas.hidden = true;
+
+  const context = canvas.getContext("2d");
+
+  if (context !== null) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  for (const element of Object.values(countElements)) {
+    element.textContent = "—";
+  }
+
+  preview.hidden = currentImage === null;
+}
+
+/**
+ * Muestra los conteos recibidos del módulo counter.
+ */
+function showCounts(counts) {
+  for (const [category, element] of Object.entries(countElements)) {
+    element.textContent = String(counts[category]);
+  }
 }
 
 /**
@@ -165,7 +212,101 @@ async function handleImageSelection() {
   }
 }
 
+/**
+ * Conecta los módulos reales y coordina un análisis.
+ * Bloquea ejecuciones simultáneas y recupera controles ante errores.
+ */
+async function handleAnalysis() {
+  if (currentImage === null || analysisInProgress) {
+    return;
+  }
+
+  const imageToAnalyze = currentImage;
+  const requestId = selectionId;
+
+  analysisInProgress = true;
+  resetResults();
+
+  try {
+    setState(
+      STATES.LOADING_MODEL,
+      "Preparando el modelo de detección..."
+    );
+
+    const detector = await import("./detector.js");
+    const counter = await import("./counter.js");
+    const renderer = await import("./renderer.js");
+
+    if (
+      typeof detector.loadModel !== "function" ||
+      typeof detector.detectVehicles !== "function" ||
+      typeof counter.countVehicles !== "function" ||
+      typeof renderer.renderDetections !== "function"
+    ) {
+      throw new Error("MODULES_PENDING");
+    }
+
+    await detector.loadModel();
+
+    if (requestId !== selectionId) {
+      return;
+    }
+
+    setState(STATES.ANALYZING, "Analizando vehículos...");
+
+    const detections = await detector.detectVehicles(
+      imageToAnalyze,
+      0.5
+    );
+
+    if (requestId !== selectionId) {
+      return;
+    }
+
+    const counts = counter.countVehicles(detections);
+
+    await renderer.renderDetections(
+      canvas,
+      imageToAnalyze,
+      detections
+    );
+
+    if (requestId !== selectionId) {
+      return;
+    }
+
+    showCounts(counts);
+    canvas.hidden = false;
+    preview.hidden = true;
+
+    setState(
+      STATES.FINISHED,
+      `Análisis terminado. Vehículos detectados: ${counts.total}.`
+    );
+  } catch (error) {
+    if (requestId !== selectionId) {
+      return;
+    }
+
+    resetResults();
+
+    const message = error.message === "MODULES_PENDING"
+      ? "La imagen está lista, pero los módulos de detección, " +
+        "conteo y dibujo todavía no están integrados."
+      : "No se pudo completar el análisis. Revisa la conexión " +
+        "e inténtalo nuevamente.";
+
+    setState(STATES.ERROR, message);
+
+    console.error("Error durante el análisis:", error);
+  } finally {
+    analysisInProgress = false;
+    setState(currentState, statusElement.textContent);
+  }
+}
+
 imageInput.addEventListener("change", handleImageSelection);
+analyzeButton.addEventListener("click", handleAnalysis);
 
 setState(
   STATES.EMPTY,
