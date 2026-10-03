@@ -8,8 +8,7 @@ Registro separado para que Angélica pueda incorporarlo a la bitácora general.
 
 Estas versiones fueron redactadas después de la conversación para explicar con
 claridad su alcance. Sintetizan los mensajes, la guía de tareas y las capturas
-proporcionadas por Eddie; no son transcripciones literales ni solicitudes
-técnicas nuevas que se hubieran escrito durante el desarrollo.
+proporcionadas por Eddie; no son transcripciones literales.
 
 ### 1. Implementación del módulo asignado
 
@@ -40,9 +39,8 @@ integración final del equipo.
 
 Esta corrección sí ocurrió: después de que la asistencia dejó abierto el PR #3,
 Eddie proporcionó la captura `1000469110.jpg` para precisar el flujo de trabajo.
-Se verificó que no hubiera conflictos y se integró el PR en `development`.
-La redacción anterior reconstruye ese intercambio; no se atribuye a Eddie una
-corrección técnica del detector que no haya realizado.
+Se verificó que no hubiera conflictos y se integró el PR en `development`,
+conservando los commits de la aportación.
 
 ## Uso y resultado
 

@@ -68,5 +68,4 @@ estado e integra mis cambios en `development`, conservando mis commits, y deja
 Se revisó el PR #3, se comprobó que no hubiera conflictos y se integró en
 `development` mediante el commit `ed94521`. `main` permaneció sin cambios.
 La captura adjunta precisó el destino de integración después de la primera
-entrega de la asistencia. No se atribuyen al integrante correcciones de código
-ni pruebas que hubiera realizado personalmente.
+entrega de la asistencia. Se conservaron los commits de la aportación.
