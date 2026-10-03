@@ -25,6 +25,10 @@
         type="file"
         accept="image/jpeg,image/png"
       >
+      
+      <button id="analyze-button" type="button" disabled>
+        Analizar vehículos
+      </button>
 
       <p id="status" role="status">
         Selecciona una imagen para visualizarla.
@@ -35,13 +39,26 @@
         alt="Fotografía seleccionada para el análisis"
         hidden
       >
+
+      <canvas
+        id="detection-canvas"
+        aria-label="Fotografía con vehículos detectados"
+        hidden
+      ></canvas>
     </section>
 
-    <section class="panel">
-      <h2>Estado del proyecto</h2>
+    <section class="panel" aria-labelledby="results-title">
+      <h2 id="results-title">Resultados del análisis</h2>
+
+      <p>Automóviles: <span id="count-car">—</span></p>
+      <p>Motocicletas: <span id="count-motorcycle">—</span></p>
+      <p>Autobuses: <span id="count-bus">—</span></p>
+      <p>Camiones: <span id="count-truck">—</span></p>
+      <p><strong>Total: <span id="count-total">—</span></strong></p>
+
       <p>
-        La carga y visualización están disponibles.
-        La detección y el conteo están pendientes de implementar.
+        El conteo corresponde a vehículos detectados en la fotografía
+        y puede contener errores.
       </p>
     </section>
   </main>
