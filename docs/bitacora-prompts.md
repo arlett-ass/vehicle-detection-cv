@@ -18,54 +18,46 @@ Angelica Arlett Santiago Serrano
 
 ## Registro 002
 
-Fecha: 2026-10-02
-Herramienta: Codex
+Fecha de registro: 2026-10-02
+Herramienta: ChatGPT
 Responsable: Eddie Dacosta Garcia
 
-### Solicitud reconstruida: implementación del detector
+Los registros 002 a 004 recogen el apoyo recibido desde la investigación hasta la integración del módulo. Redacciones reconstruidas a partir de la conversación y los documentos proporcionados, organizadas para esta bitácora; no son transcripciones literales.
 
-Redacción posterior basada en los mensajes y la guía adjunta; no es una
-transcripción literal del chat.
+### Solicitud: Investigación sobre visión por computadora
 
-Revisa los avances del repositorio `arlett-ass/vehicle-detection-cv` y desarrolla
-el módulo de modelo e inferencia asignado a Eddie. Integra TensorFlow.js y
-COCO-SSD preentrenado, comparte la carga del modelo y permite reintentarla si
-falla. Filtra automóviles, motocicletas, autobuses y camiones por confianza,
-conservando clase, puntuación y coordenadas. Respeta los contratos del equipo,
-documenta dependencias y limitaciones, ejecuta pruebas reproducibles y sube mi
-aportación a GitHub.
+Ayúdame a organizar mi investigación sobre la rama de inteligencia artificial de visión por computadora, siguiendo las instrucciones de la actividad. Explica qué es, cómo funciona, sus aplicaciones y las herramientas que se pueden utilizar. Incluye fuentes y ayúdame a preparar el documento en PDF.
 
 ### Resultado y uso
 
-Detector con carga compartida, reintentos y filtro de vehículos; dependencias
-con versiones fijas, documentación y pruebas unitarias y reales.
-Resultado adaptado al repositorio y verificado mediante las pruebas registradas.
-La integración se dirige a `development`, conforme al acuerdo del equipo.
-
-El [registro detallado de Eddie](bitacora-eddie.md) describe los adjuntos de
-contexto, los ajustes de la asistencia y los pendientes de revisión humana.
-Resultados comprobados: [pruebas del detector](pruebas-detector.md).
-Reflexión personal y selección Top 3: pendientes del integrante y del equipo.
+Apoyo para organizar la investigación y preparar Vision_por_computadora.pdf.
 
 ## Registro 003
 
-Fecha: 2026-10-02
-Herramienta: Codex
+Fecha de registro: 2026-10-02
+Herramienta: ChatGPT
 Responsable: Eddie Dacosta Garcia
 
-### Solicitud reconstruida: corrección del flujo de integración
+### Solicitud: Caso de uso: detección de vehículos
 
-Redacción posterior basada en la captura de coordinación que Eddie proporcionó.
-La corrección del destino de integración sí ocurrió; el texto no es literal.
-
-Mi aportación debe quedar integrada en `development`, conforme al acuerdo del
-equipo. No basta con subir la rama individual y dejar el PR abierto. Revisa su
-estado e integra mis cambios en `development`, conservando mis commits, y deja
-`main` para la integración final del equipo.
+Continuando con la investigación de visión por computadora, ayúdame a desarrollar el caso de uso de detección de carros, motos y camiones en imágenes adjuntas. Necesito explicar el problema, cómo funcionaría el prototipo, sus entradas y salidas, y justificar herramientas gratuitas para realizarlo. Organiza el contenido conforme a la actividad y prepáralo en PDF.
 
 ### Resultado y uso
 
-Se revisó el PR #3, se comprobó que no hubiera conflictos y se integró en
-`development` mediante el commit `ed94521`. `main` permaneció sin cambios.
-La captura adjunta precisó el destino de integración después de la primera
-entrega de la asistencia. Se conservaron los commits de la aportación.
+Apoyo para desarrollar el caso de detección de vehículos y preparar Bloque_1_Vision_por_computadora.pdf.
+
+## Registro 004
+
+Fecha de registro: 2026-10-02
+Herramienta: Codex
+Responsable: Eddie Dacosta Garcia
+
+### Solicitud: Apoyo para desarrollar e integrar mi módulo
+
+Revisa la guía de tareas y los avances del repositorio del equipo. Me corresponde el módulo de modelo e inferencia; ayúdame a implementarlo e integrarlo respetando las funciones acordadas. Necesito cargar COCO-SSD con TensorFlow.js, reutilizar el modelo, manejar errores y filtrar los vehículos por confianza.
+
+### Resultado y uso
+
+Asistencia para implementar e integrar el detector en development conforme al contrato del equipo. El registro de comprobaciones está en [pruebas del detector](pruebas-detector.md).
+
+El [registro de Eddie](bitacora-eddie.md) reúne las tres etapas. La reflexión personal y la selección Top 3 quedan a cargo del integrante y del equipo.

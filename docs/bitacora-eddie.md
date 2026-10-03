@@ -1,71 +1,52 @@
 # Aportación de Eddie a la bitácora de prompts
 
-Fecha de inicio: 2026-10-02 (America/Mexico_City).
-Integrante: Eddie Dacosta Garcia. Herramienta: Codex.
-Registro separado para que Angélica pueda incorporarlo a la bitácora general.
+Fecha de actualización: 2026-10-02 (America/Mexico_City).
+Integrante: Eddie Dacosta Garcia. Herramientas: ChatGPT y Codex.
 
-## Solicitudes reconstruidas
+Redacciones reconstruidas a partir de la conversación y los documentos proporcionados, organizadas para esta bitácora; no son transcripciones literales.
 
-Estas versiones fueron redactadas después de la conversación para explicar con
-claridad su alcance. Sintetizan los mensajes, la guía de tareas y las capturas
-proporcionadas por Eddie; no son transcripciones literales.
+## 1. Investigación sobre visión por computadora
 
-### 1. Implementación del módulo asignado
+Herramienta: ChatGPT.
 
-Revisa el repositorio `arlett-ass/vehicle-detection-cv`, sus ramas y los avances
-del equipo. Con base en la guía adjunta, desarrolla la parte asignada a Eddie:
-el módulo de modelo e inferencia en `app/src/js/detector.js` y la documentación
-de sus dependencias. Respeta las funciones y formatos acordados para que el
-detector pueda conectarse con el coordinador, el contador y el dibujo.
+### Solicitud
 
-Integra TensorFlow.js y COCO-SSD preentrenado en el navegador. Implementa una
-carga compartida del modelo con reintento si falla, y una función que devuelva
-solo automóviles, motocicletas, autobuses y camiones según el umbral de
-confianza. Conserva la clase, la puntuación y las coordenadas de cada detección.
-Documenta versiones, fuentes, licencias y límites del modelo. Comprueba el
-comportamiento con pruebas reproducibles y registra los resultados reales y
-lo que todavía quede pendiente antes de subir mi aportación a GitHub.
+Ayúdame a organizar mi investigación sobre la rama de inteligencia artificial de visión por computadora, siguiendo las instrucciones de la actividad. Explica qué es, cómo funciona, sus aplicaciones y las herramientas que se pueden utilizar. Incluye fuentes y ayúdame a preparar el documento en PDF.
 
-Contexto utilizado: `Guia_tareas_equipo_deteccion_vehiculos.pdf`, captura de la
-organización del equipo y enlace al repositorio proporcionado por Eddie.
+### Resultado y uso
 
-### 2. Corrección del destino de integración
+Apoyo para organizar la investigación y preparar Vision_por_computadora.pdf.
 
-Revisa el acuerdo del equipo que adjunté: mi aportación debe quedar integrada
-en `development`; subir únicamente la rama individual y dejar el PR abierto
-no completa ese paso. Verifica el estado del PR e integra los cambios en
-`development`, conservando los commits de mi aportación. Deja `main` para la
-integración final del equipo.
+## 2. Caso de uso: detección de vehículos
 
-Esta corrección sí ocurrió: después de que la asistencia dejó abierto el PR #3,
-Eddie proporcionó la captura `1000469110.jpg` para precisar el flujo de trabajo.
-Se verificó que no hubiera conflictos y se integró el PR en `development`,
-conservando los commits de la aportación.
+Herramienta: ChatGPT.
 
-## Uso y resultado
+### Solicitud
 
-Código y documentación propuestos con asistencia de IA: carga compartida y
-reintento del modelo, inferencia y filtro de vehículos, dependencias fijadas,
-pruebas unitarias y una página de prueba real independiente. Se adaptaron a los
-contratos y archivos existentes en `development`, sin implementar los módulos
-asignados a los otros integrantes.
+Continuando con la investigación de visión por computadora, ayúdame a desarrollar el caso de uso de detección de carros, motos y camiones en imágenes adjuntas. Necesito explicar el problema, cómo funcionaría el prototipo, sus entradas y salidas, y justificar herramientas gratuitas para realizarlo. Organiza el contenido conforme a la actividad y prepáralo en PDF.
 
-Uso: modificado y verificado mediante las pruebas descritas en
-`pruebas-detector.md`. La verificación automatizada no sustituye la revisión
-humana del código ni la evaluación con las fotografías del equipo.
+### Resultado y uso
 
-## Ajustes realizados por la asistencia
+Apoyo para desarrollar el caso de detección de vehículos y preparar Bloque_1_Vision_por_computadora.pdf.
 
-Los siguientes ajustes surgieron de la verificación de Codex; se distinguen de
-la corrección del flujo de integración indicada por Eddie.
+## 3. Apoyo para desarrollar e integrar mi módulo
 
-- Se verificó la distribución real de COCO-SSD: la ruta ES2017 consultada no
-  existía; se usó el bundle oficial `dist/coco-ssd.min.js` de la versión fijada.
-- Se comprobó que el límite de recuadros afecta todas las clases antes del
-  filtro de vehículos, y que `minScore` también interviene en NMS en esta versión.
-- Se añadió un estado de carga a la página de prueba para evitar activarla
-  antes de que se registraran sus controles.
+Herramienta: Codex.
 
-Revisión humana por Eddie y revisión del PR por Angélica: pendientes.
-Reflexión personal y selección Top 3: pendientes de que el integrante y el equipo
-las redacten con base en su experiencia; no se inventan como si ya hubieran ocurrido.
+### Solicitud
+
+Revisa la guía de tareas y los avances del repositorio del equipo. Me corresponde el módulo de modelo e inferencia; ayúdame a implementarlo e integrarlo respetando las funciones acordadas. Necesito cargar COCO-SSD con TensorFlow.js, reutilizar el modelo, manejar errores y filtrar los vehículos por confianza.
+
+### Resultado y uso
+
+Asistencia para implementar e integrar el detector en development conforme al contrato del equipo. El registro de comprobaciones está en [pruebas del detector](pruebas-detector.md).
+
+## Alcance del apoyo
+
+El proceso comprende la organización de la investigación, el desarrollo del caso
+de uso y la asistencia para implementar e integrar el módulo asignado a Eddie.
+Los textos anteriores describen esas solicitudes. Los resultados técnicos y las
+pruebas realizadas se conservan en la documentación del detector.
+
+La revisión humana de los materiales y del código, la reflexión personal y la
+selección Top 3 quedan a cargo del integrante y del equipo.
