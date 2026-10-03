@@ -15,6 +15,15 @@ Mensaje posterior con el repositorio:
 
 > https://github.com/arlett-ass/vehicle-detection-cv
 
+Mensaje posterior sobre el flujo de integración:
+
+> Toma en cuenta esto JAJA
+
+Adjunto: captura `1000469110.jpg` con el acuerdo del equipo de integrar los
+avances en `development`, dejar `main` para el final y conservar los prompts
+tal como fueron escritos en el chat. Los textos citados arriba son literales;
+las explicaciones fuera de las citas describen el contexto y el trabajo realizado.
+
 ## Uso y resultado
 
 Código y documentación propuestos con asistencia de IA: carga compartida y
