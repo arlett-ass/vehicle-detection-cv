@@ -1,9 +1,8 @@
 /**
- * Coordina la selección y carga de fotografías.
- *
- * Cada selección tiene un identificador para impedir que una
- * carga anterior sobrescriba el estado de una imagen nueva.
- * La integración del detector se añadirá posteriormente.
+ * Coordina la selección, validación y carga de fotografías,
+ * y conecta detección, conteo y dibujo.
+ * Cada selección tiene un identificador para descartar
+ * respuestas de una fotografía anterior.
  */
 
 const imageInput = document.querySelector("#image-input");
@@ -12,6 +11,8 @@ const statusElement = document.querySelector("#status");
 
 const analyzeButton = document.querySelector("#analyze-button");
 const canvas = document.querySelector("#detection-canvas");
+
+const emptyState = document.querySelector("#empty-state");
 
 const countElements = {
   car: document.querySelector("#count-car"),
@@ -52,6 +53,8 @@ function setState(state, message) {
 
   analyzeButton.disabled = currentImage === null || analysisInProgress;
   imageInput.disabled = analysisInProgress;
+
+  emptyState.hidden = currentImage !== null;
 }
 
 /**
@@ -83,7 +86,7 @@ function showCounts(counts) {
 }
 
 /**
- * Retira la fotografía anterior y libera su URL temporal.
+ * Retira la fotografía anterior y libera su URL temporal además de limpiar el canvas y conteos anteriores.
  */
 function clearImage() {
   currentImage = null;
@@ -94,6 +97,8 @@ function clearImage() {
     URL.revokeObjectURL(currentImageUrl);
     currentImageUrl = null;
   }
+
+  resetResults();
 }
 
 /**
@@ -193,7 +198,7 @@ async function handleImageSelection() {
       STATES.IMAGE_READY,
       `Imagen cargada: ${image.naturalWidth} × ` +
         `${image.naturalHeight} píxeles. ` +
-        "La detección todavía no está implementada."
+        "Pulsa «Analizar vehículos» para iniciar."
     );
   } catch (error) {
     if (requestId !== selectionId) {
