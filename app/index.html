@@ -1,207 +1,253 @@
 <!DOCTYPE html>
-
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Detección de vehículos</title>
-
-  <link rel="stylesheet" href="./src/css/styles.css">
-</head>
-
-<body>
-  <main class="container">
-
-<header class="page-header">
-  <p class="eyebrow">PROTOTIPO DE VISIÓN POR COMPUTADORA</p>
-
-  <h1>Detección de vehículos</h1>
-
-  <p class="description">
-    Selecciona una fotografía para detectar y contar vehículos
-    mediante un modelo de visión por computadora ejecutado en el navegador.
-  </p>
-</header>
-
-<section class="panel analysis-panel" aria-labelledby="upload-title">
-
-  <div class="section-header">
-    <div>
-      <p class="section-number">01</p>
-      <h2 id="upload-title">Seleccionar fotografía</h2>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <label for="image-input">
-      Imagen en formato JPG o PNG
-    </label>
-
-    <input
-      id="image-input"
-      type="file"
-      accept="image/jpeg,image/png"
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+      name="description"
+      content="Prototipo de visión por computadora para detectar y contar vehículos en fotografías."
     >
-  </div>
+    <title>Detección de vehículos</title>
+    <link rel="stylesheet" href="./src/css/styles.css">
+  </head>
 
-  <div class="action-area">
-    <button
-      id="analyze-button"
-      type="button"
-      disabled
-    >
-      Analizar vehículos
-    </button>
-  </div>
+  <body>
+    <main class="container">
+      <header class="page-header">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">AV</span>
+          <span>AutoVision</span>
+        </div>
 
-  <p
-    id="status"
-    class="status"
-    role="status"
-    aria-live="polite"
-  >
-    Selecciona una imagen para visualizarla.
-  </p>
+        <div class="header-content">
+          <div>
+            <p class="eyebrow">VISIÓN POR COMPUTADORA</p>
+            <h1>Una fotografía.<br>Una visión del tránsito.</h1>
+            <p class="description">
+              Detecta vehículos visibles en una imagen y consulta
+              su cantidad por categoría.
+            </p>
+          </div>
 
-</section>
+          <div class="scope-badge">
+            <span class="scope-dot" aria-hidden="true"></span>
+            Prototipo · Fotografías individuales
+          </div>
+        </div>
+      </header>
 
-<section
-  class="panel visualization-panel"
-  aria-labelledby="visualization-title"
->
+      <div class="workspace">
+        <section class="panel analysis-panel" aria-labelledby="upload-title">
+          <div class="section-header">
+            <span class="step-number" aria-hidden="true">01</span>
+            <div>
+              <p class="eyebrow">ENTRADA</p>
+              <h2 id="upload-title">Selecciona una fotografía</h2>
+            </div>
+          </div>
 
-  <div class="section-header">
-    <div>
-      <p class="section-number">02</p>
-      <h2 id="visualization-title">Visualización</h2>
-    </div>
-  </div>
+          <p class="section-description">
+            Utiliza una imagen de una calle, acceso escolar o estacionamiento.
+          </p>
 
-  <div class="visualization-area">
+          <div class="upload-box">
+            <span class="upload-icon" aria-hidden="true">
+              <img
+                  class="vehicle-icon"
+                  src="./public/assets/icons/subir.png"
+                  alt=""
+                  aria-hidden="true"
+                >
+            </span>
+            <label for="image-input">Elige una imagen de tu dispositivo</label>
+            <p id="file-help">JPG o PNG · Hasta 10 MB</p>
 
-    <div class="canvas-container">
+            <input id="image-input" type="file" accept="image/jpeg,image/png" aria-describedby="file-help" >
+          </div>
 
-      <div class="empty-state" id="empty-state">
-        <span class="empty-icon" aria-hidden="true">▧</span>
+          <button id="analyze-button" type="button" disabled>
+            Analizar vehículos
+            <span aria-hidden="true">
+              <img
+                  class="vehicle-icon"
+                  src="./public/assets/icons/escanear.png"
+                  alt=""
+                  aria-hidden="true"
+                >
+            </span>
+          </button>
 
-        <h3>Sin imagen analizada</h3>
+          <p id="status" class="status" role="status" aria-live="polite" >
+            Selecciona una imagen para visualizarla.
+          </p>
 
-        <p>
-          Selecciona una fotografía para visualizarla y posteriormente
-          iniciar el análisis.
-        </p>
+          <div class="tips">
+            <h3>Para mejores resultados</h3>
+            <ul>
+              <li>Elige una fotografía con buena iluminación.</li>
+              <li>Procura que los vehículos sean visibles y distinguibles.</li>
+              <li>Compara el resultado con la imagen original.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="panel visualization-panel" aria-labelledby="visualization-title" >
+          <div class="section-header">
+            <span class="step-number" aria-hidden="true">02</span>
+            <div>
+              <p class="eyebrow">ANÁLISIS VISUAL</p>
+              <h2 id="visualization-title">Fotografía y detecciones</h2>
+            </div>
+          </div>
+
+          <div class="canvas-container">
+            <div class="empty-state" id="empty-state">
+              <span class="empty-icon" aria-hidden="true">
+                <img
+                  class="vehicle-icon"
+                  src="./public/assets/icons/imagen.png"
+                  alt=""
+                  aria-hidden="true"
+                >
+              </span>
+              <h3>Tu fotografía aparecerá aquí</h3>
+              <p>
+                Selecciona una imagen y pulsa «Analizar vehículos»
+                para ver las detecciones.
+              </p>
+            </div>
+
+            <img
+              id="preview"
+              alt="Fotografía seleccionada para el análisis"
+              hidden
+            >
+
+            <canvas
+              id="detection-canvas"
+              aria-label="Fotografía con recuadros y etiquetas de vehículos detectados"
+              hidden
+            >
+              Consulta los conteos en el panel de resultados.
+            </canvas>
+          </div>
+
+          <aside class="results-panel" aria-labelledby="results-title">
+            <div class="results-header">
+              <div>
+                <p class="eyebrow">03 · CONTEO</p>
+                <h2 id="results-title">Resultados de la fotografía</h2>
+              </div>
+              <span class="results-caption">Por categoría</span>
+            </div>
+
+            <div class="results-grid">
+              <article class="count-card">
+                <div class="count-heading">
+                  <img
+                    class="vehicle-icon"
+                    src="./public/assets/icons/coche.png"
+                    alt=""
+                    aria-hidden="true"
+                  >
+                  <span class="count-label">Automóviles</span>
+                </div>
+                <strong id="count-car">—</strong>
+              </article>
+
+              <article class="count-card">
+                <div class="count-heading">
+                  <img
+                    class="vehicle-icon"
+                    src="./public/assets/icons/moto.png"
+                    alt=""
+                    aria-hidden="true"
+                  >
+                  <span class="count-label">Motocicletas</span>
+                </div>
+                <strong id="count-motorcycle">—</strong>
+              </article>
+
+              <article class="count-card">
+                <div class="count-heading">
+                  <img
+                    class="vehicle-icon"
+                    src="./public/assets/icons/autobus-escolar.png"
+                    alt=""
+                    aria-hidden="true"
+                  >
+                  <span class="count-label">Autobuses</span>
+                </div>
+                <strong id="count-bus">—</strong>
+              </article>
+
+              <article class="count-card">
+                <div class="count-heading">
+                  <img
+                    class="vehicle-icon"
+                    src="./public/assets/icons/camion.png"
+                    alt=""
+                    aria-hidden="true"
+                  >
+                  <span class="count-label">Camiones</span>
+                </div>
+                <strong id="count-truck">—</strong>
+              </article>
+            </div>
+
+            <div class="total-card">
+              <div>
+                <span>Total de vehículos</span>
+                <small>Detectados en esta fotografía</small>
+              </div>
+              <strong id="count-total">—</strong>
+            </div>
+
+            <p class="result-note">
+              " — " indica que aún no hay un resultado.
+              Un conteo de 0 significa que el modelo no detectó vehículos
+              de esa categoría.
+            </p>
+          </aside>
+        </section>
       </div>
 
-      <img
-        id="preview"
-        alt="Fotografía seleccionada para el análisis"
-        hidden
-      >
+      <section class="limitations" aria-labelledby="limitations-title">
+        <img
+          class="vehicle-icon"
+          src="./public/assets/icons/informacion.png"
+          alt=""
+          aria-hidden="true"
+        >
 
-      <canvas
-        id="detection-canvas"
-        aria-label="Fotografía con vehículos detectados"
-        hidden
-      ></canvas>
+        <div>
+          <p class="eyebrow">ALCANCE DEL PROTOTIPO</p>
+          <h2 id="limitations-title">Interpreta los resultados con cuidado</h2>
+        </div>
 
-    </div>
+        <ul>
+          <li>
+            <strong>Un instante</strong>
+            Cuenta vehículos visibles; no determina entradas ni salidas.
+          </li>
+          <li>
+            <strong>Una estimación</strong>
+            Puede omitir vehículos o confundir categorías.
+          </li>
+          <li>
+            <strong>Revisión visual</strong>
+            La iluminación, distancia y objetos ocultos afectan la detección.
+          </li>
+        </ul>
+      </section>
 
-    <aside
-      class="results-panel"
-      aria-labelledby="results-title"
-    >
+      <footer class="page-footer">
+        <span>Escuelas, calles y estacionamientos</span>
+      </footer>
+    </main>
 
-      <div class="results-header">
-        <p class="section-number">03</p>
-        <h2 id="results-title">Resultados</h2>
-      </div>
-
-      <div class="results-grid">
-
-        <article class="count-card">
-          <span class="count-label">Automóviles</span>
-          <strong id="count-car">—</strong>
-        </article>
-
-        <article class="count-card">
-          <span class="count-label">Motocicletas</span>
-          <strong id="count-motorcycle">—</strong>
-        </article>
-
-        <article class="count-card">
-          <span class="count-label">Autobuses</span>
-          <strong id="count-bus">—</strong>
-        </article>
-
-        <article class="count-card">
-          <span class="count-label">Camiones</span>
-          <strong id="count-truck">—</strong>
-        </article>
-
-      </div>
-
-      <div class="total-card">
-        <span>Total de vehículos</span>
-        <strong id="count-total">—</strong>
-      </div>
-
-      <p class="result-note">
-        El conteo corresponde a vehículos detectados en la fotografía
-        y puede contener errores.
-      </p>
-
-    </aside>
-
-  </div>
-
-</section>
-
-<section
-  class="limitations"
-  aria-labelledby="limitations-title"
->
-
-  <p class="section-number">NOTA</p>
-
-  <h2 id="limitations-title">
-    Límites del prototipo
-  </h2>
-
-  <ul>
-    <li>
-      El sistema analiza fotografías individuales.
-    </li>
-
-    <li>
-      Los resultados dependen del modelo y pueden contener errores.
-    </li>
-
-    <li>
-      Una imagen sin vehículos debe mostrar un resultado de cero,
-      mientras que una imagen todavía no analizada se muestra como
-      estado pendiente.
-    </li>
-  </ul>
-
-</section>
-
-  </main>
-
-  <!-- TensorFlow.js debe cargarse antes que COCO-SSD. -->
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"
-  ></script>
-
-  <script
-    src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"
-  ></script>
-
-  <script
-    type="module"
-    src="./src/js/app.js"
-  ></script>
-
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
+    <script type="module" src="./src/js/app.js"></script>
+  </body>
 </html>
