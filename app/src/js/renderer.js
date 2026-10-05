@@ -61,31 +61,53 @@ export function renderDetections(canvas, image, detections) {
     context.strokeRect(...detection.bbox);
   }
 
-  for (const detection of detections) {
+  detections.forEach((detection, index) => {
     const [x, y] = detection.bbox;
-    const text = `${VEHICLE_LABELS[detection.class] ?? detection.class} ` +
-      `${Math.round(detection.score * 100)}%`;
-    // Reducir texto y margen solo si la imagen es demasiado pequeña.
+    const text = `#${index + 1}`;
+
     const padding = Math.min(4, width / 8, height / 8);
-    let labelFontSize = Math.min(fontSize, (height - padding * 2) / 1.2);
-    context.font = `${labelFontSize}px Arial, sans-serif`;
+
+    let labelFontSize = Math.min(
+      fontSize,
+      (height - padding * 2) / 1.2
+    );
+
+    context.font = `bold ${labelFontSize}px Arial, sans-serif`;
+
     const availableWidth = width - padding * 2;
     const textWidth = context.measureText(text).width;
+
     if (textWidth > availableWidth) {
       labelFontSize *= availableWidth / textWidth;
-      context.font = `${labelFontSize}px Arial, sans-serif`;
+      context.font = `bold ${labelFontSize}px Arial, sans-serif`;
     }
-    const labelWidth = Math.min(width, context.measureText(text).width + padding * 2);
-    const labelHeight = Math.min(height, labelFontSize * 1.2 + padding * 2);
+
+    const labelWidth = Math.min(
+      width,
+      context.measureText(text).width + padding * 2
+    );
+
+    const labelHeight = Math.min(
+      height,
+      labelFontSize * 1.2 + padding * 2
+    );
+
     const labelX = Math.max(0, Math.min(x, width - labelWidth));
-    // Preferir arriba del recuadro; en el borde superior, usar su interior.
     const preferredY = y >= labelHeight ? y - labelHeight : y;
     const labelY = Math.max(0, Math.min(preferredY, height - labelHeight));
+
     context.fillStyle = "#102a43";
     context.fillRect(labelX, labelY, labelWidth, labelHeight);
+
     context.fillStyle = "#ffffff";
     context.textAlign = "left";
     context.textBaseline = "middle";
-    context.fillText(text, labelX + padding, labelY + labelHeight / 2, availableWidth);
-  }
+
+    context.fillText(
+      text,
+      labelX + padding,
+      labelY + labelHeight / 2,
+      availableWidth
+    );
+  });
 }

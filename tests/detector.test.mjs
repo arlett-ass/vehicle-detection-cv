@@ -64,7 +64,7 @@ test("filtra cuatro categorías y umbral inclusivo sin modificar predicciones", 
     prediction("car", 0.49), prediction("car", NaN)];
   const original = structuredClone(input);
   const detector = await fresh(async () => ({ detect: async () => input }));
-  const output = await detector.detectVehicles(image);
+  const output = await detector.detectVehicles(image, 0.5);
   assert.deepEqual(output.map((p) => p.class), ["car", "motorcycle", "bus", "truck"]);
   assert.deepEqual(output[0], original[0]);
   output[0].bbox[0] = 999;
@@ -130,3 +130,26 @@ test("acepta los extremos 0 y 1 del umbral", async () => {
 });
 
 test.after(() => { delete globalThis.tf; delete globalThis.cocoSsd; });
+
+test("usa 0.4 como umbral predeterminado y acepta su límite", async () => {
+  const input = [
+    prediction("car", 0.4),
+    prediction("motorcycle", 0.39),
+  ];
+
+  let receivedThreshold;
+
+  const detector = await fresh(async () => ({
+    detect: async (_image, _maximum, threshold) => {
+      receivedThreshold = threshold;
+      return input;
+    },
+  }));
+
+  assert.equal(detector.DEFAULT_MIN_CONFIDENCE, 0.4);
+
+  const output = await detector.detectVehicles(image);
+
+  assert.equal(receivedThreshold, 0.4);
+  assert.deepEqual(output, [input[0]]);
+});

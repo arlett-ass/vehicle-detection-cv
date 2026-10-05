@@ -20,7 +20,7 @@
   --error: #a32937;
 
   --radius: 20px;
-  --shadow: 0 12px 32px rgb(24 49 83 / 6%);
+  --shadow: 0 12px 32px rgba(15, 29, 61, 0.06);
 }
 
 * {
@@ -87,7 +87,7 @@ h3 {
   border-radius: 12px;
   background: var(--navy);
   color: white;
-  font-size: 0.85rem;
+  font-size: 1rem;
   letter-spacing: 0.04em;
 }
 
@@ -117,26 +117,6 @@ h1 {
   max-width: 580px;
   margin-bottom: 0;
   color: var(--muted);
-}
-
-.scope-badge {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 13px;
-  border: 1px solid #bddcd7;
-  border-radius: 999px;
-  background: var(--primary-soft);
-  color: var(--success);
-  font-size: 0.75rem;
-}
-
-.scope-dot {
-  width: 7px;
-  height: 7px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: var(--primary);
 }
 
 /* 3. Distribución principal */
@@ -184,35 +164,102 @@ h1 {
 
 /* 4. Selector y botón */
 .upload-box {
-  padding: 22px 16px;
-  border: 2px dashed #b9d2d7;
-  border-radius: 14px;
-  background: var(--surface-soft);
-  text-align: center;
+  padding: 20px;
+  text-align: left;
+  border: 1px solid var(--border, #d9dde3);
+  border-radius: 16px;
+  background: var(--surface-soft, #f8f9fa);
 }
 
-.upload-icon {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  margin: 0 auto 12px;
-  border-radius: 12px;
-  background: var(--primary-soft);
-  color: var(--primary-hover);
-  font-size: 1.8rem;
+.upload-intro {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
 }
 
-.upload-box label {
-  display: block;
+.upload-intro-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.upload-intro h3 {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+}
+
+.upload-intro p {
+  margin: 0;
+  color: var(--muted, #626b75);
   font-size: 0.9rem;
+}
+
+.photo-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.photo-option {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--border, #d9dde3);
+  border-radius: 12px;
+  background: var(--surface, #ffffff);
+}
+
+.photo-option label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
   font-weight: 700;
 }
 
-.upload-box p {
-  margin: 6px 0 16px;
-  color: var(--muted);
+.photo-option-description {
+  margin: 0 0 14px;
+  color: var(--muted, #626b75);
+  font-size: 0.85rem;
+}
+
+.photo-option input[type="file"] {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted, #626b75);
   font-size: 0.8rem;
+}
+
+.photo-option input::file-selector-button {
+  min-height: 44px;
+  margin-right: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border, #d9dde3);
+  border-radius: 8px;
+  background: var(--surface-soft, #f8f9fa);
+  color: var(--text, #20252b);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.photo-option input:not(:disabled)::file-selector-button:hover {
+  border-color: var(--primary, #1f2937);
+}
+
+.photo-option input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.photo-option input:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 4px;
 }
 
 input[type="file"] {
@@ -272,6 +319,21 @@ button:focus-visible,
 input:focus-visible {
   outline: 3px solid var(--primary);
   outline-offset: 4px;
+}
+
+.camera-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  color: var(--primary);
+  background: var(--primary-soft);
+  font-weight: 600;
+  cursor: pointer;
 }
 
 /* 5. Estados y recomendaciones */
@@ -506,6 +568,45 @@ input:focus-visible {
   color: var(--muted);
   font-size: 0.75rem;
 }
+
+.page-footer {
+  flex-wrap: wrap;
+}
+
+.icon-credits {
+  flex-basis: 100%;
+  min-width: 0;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border, #d9dde3);
+}
+
+.icon-credits h2 {
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.icon-credits ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.icon-credits a {
+  color: var(--muted, #626b75);
+  font-size: 0.8rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.icon-credits a:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
 /* Iconos y leyendas alineados */
 .vehicle-icon {
   display: block;
@@ -577,6 +678,8 @@ input:focus-visible {
   height: 22px;
 }
 
+
+
 /* Dos tarjetas por fila para dar espacio a las leyendas */
 @media (max-width: 1200px) {
   .results-grid {
@@ -604,4 +707,114 @@ input:focus-visible {
   font-size: 0.9rem;
   font-weight: 600;
   line-height: 1.4;
+}
+
+/* Respetar la visibilidad controlada por app.js */
+[hidden] {
+  display: none !important;
+}
+
+/* Distribución para celulares */
+@media (max-width: 760px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .limitations ul {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .canvas-container {
+    min-height: 250px;
+  }
+}
+
+.image-comparison {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.image-panel {
+  min-width: 0;
+  margin: 0;
+}
+
+.image-panel figcaption {
+  margin-bottom: 8px;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.image-panel img,
+.image-panel canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  border-radius: 8px;
+}
+
+/* Dos imágenes lado a lado cuando el resultado está disponible */
+@media (min-width: 1100px) {
+  .image-comparison:has(#analysis-panel:not([hidden])) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.detection-details {
+  margin-top: 20px;
+}
+
+.detection-details h3 {
+  margin-bottom: 6px;
+}
+
+.detection-details > p {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.detection-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px;
+  max-height: 240px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.detection-list li {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  font-size: 0.85rem;
+}
+
+/* La entrada ocupa una columna estrecha en laptops. */
+@media (min-width: 821px) {
+  .photo-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .upload-box {
+    padding: 16px;
+  }
+
+  .photo-options {
+    grid-template-columns: 1fr;
+  }
 }
