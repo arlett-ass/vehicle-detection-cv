@@ -28,11 +28,6 @@
               su cantidad por categoría.
             </p>
           </div>
-
-          <div class="scope-badge">
-            <span class="scope-dot" aria-hidden="true"></span>
-            Prototipo · Fotografías individuales
-          </div>
         </div>
       </header>
 
@@ -63,6 +58,10 @@
             <p id="file-help">JPG o PNG · Hasta 10 MB</p>
 
             <input id="image-input" type="file" accept="image/jpeg,image/png" aria-describedby="file-help" >
+
+            <label class="camera-button" for="camera-input">Tomar fotografía</label>
+
+            <input id="camera-input" type="file" accept="image/jpeg,image/png" capture="environment" hidden>
           </div>
 
           <button id="analyze-button" type="button" disabled>
@@ -102,35 +101,41 @@
 
           <div class="canvas-container">
             <div class="empty-state" id="empty-state">
-              <span class="empty-icon" aria-hidden="true">
-                <img
-                  class="vehicle-icon"
-                  src="./public/assets/icons/imagen.png"
-                  alt=""
-                  aria-hidden="true"
-                >
-              </span>
               <h3>Tu fotografía aparecerá aquí</h3>
-              <p>
-                Selecciona una imagen y pulsa «Analizar vehículos»
-                para ver las detecciones.
-              </p>
+              <p>Selecciona una imagen para comenzar.</p>
             </div>
 
-            <img
-              id="preview"
-              alt="Fotografía seleccionada para el análisis"
-              hidden
-            >
+            <div class="image-comparison" id="image-comparison" hidden>
+              <figure class="image-panel">
+                <figcaption>Fotografía original</figcaption>
+                <img
+                  id="preview"
+                  alt="Fotografía original seleccionada"
+                  hidden
+                >
+              </figure>
 
-            <canvas
-              id="detection-canvas"
-              aria-label="Fotografía con recuadros y etiquetas de vehículos detectados"
-              hidden
-            >
-              Consulta los conteos en el panel de resultados.
-            </canvas>
+              <figure class="image-panel" id="analysis-panel" hidden>
+                <figcaption>Vehículos detectados</figcaption>
+                <canvas
+                  id="detection-canvas"
+                  aria-label="Fotografía con vehículos identificados por número"
+                  hidden
+                ></canvas>
+              </figure>
+            </div>
           </div>
+
+          <section
+            class="detection-details"
+            id="detection-details"
+            aria-labelledby="detections-title"
+            hidden
+          >
+            <h3 id="detections-title">Detalle de detecciones</h3>
+            <p>Los números corresponden a los recuadros de la imagen.</p>
+            <ol id="detection-list" class="detection-list"></ol>
+          </section>
 
           <aside class="results-panel" aria-labelledby="results-title">
             <div class="results-header">

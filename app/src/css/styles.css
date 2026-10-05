@@ -20,7 +20,7 @@
   --error: #a32937;
 
   --radius: 20px;
-  --shadow: 0 12px 32px rgb(24 49 83 / 6%);
+  --shadow: 0 12px 32px rgba(15, 29, 61, 0.06);
 }
 
 * {
@@ -87,7 +87,7 @@ h3 {
   border-radius: 12px;
   background: var(--navy);
   color: white;
-  font-size: 0.85rem;
+  font-size: 1rem;
   letter-spacing: 0.04em;
 }
 
@@ -117,26 +117,6 @@ h1 {
   max-width: 580px;
   margin-bottom: 0;
   color: var(--muted);
-}
-
-.scope-badge {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 13px;
-  border: 1px solid #bddcd7;
-  border-radius: 999px;
-  background: var(--primary-soft);
-  color: var(--success);
-  font-size: 0.75rem;
-}
-
-.scope-dot {
-  width: 7px;
-  height: 7px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: var(--primary);
 }
 
 /* 3. Distribución principal */
@@ -272,6 +252,21 @@ button:focus-visible,
 input:focus-visible {
   outline: 3px solid var(--primary);
   outline-offset: 4px;
+}
+
+.camera-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  color: var(--primary);
+  background: var(--primary-soft);
+  font-weight: 600;
+  cursor: pointer;
 }
 
 /* 5. Estados y recomendaciones */
@@ -604,4 +599,97 @@ input:focus-visible {
   font-size: 0.9rem;
   font-weight: 600;
   line-height: 1.4;
+}
+
+/* Respetar la visibilidad controlada por app.js */
+[hidden] {
+  display: none !important;
+}
+
+/* Distribución para celulares */
+@media (max-width: 760px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .workspace {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .limitations ul {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .canvas-container {
+    min-height: 250px;
+  }
+}
+
+.image-comparison {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.image-panel {
+  min-width: 0;
+  margin: 0;
+}
+
+.image-panel figcaption {
+  margin-bottom: 8px;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.image-panel img,
+.image-panel canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  border-radius: 8px;
+}
+
+/* Dos imágenes lado a lado cuando el resultado está disponible */
+@media (min-width: 1100px) {
+  .image-comparison:has(#analysis-panel:not([hidden])) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.detection-details {
+  margin-top: 20px;
+}
+
+.detection-details h3 {
+  margin-bottom: 6px;
+}
+
+.detection-details > p {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.detection-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px;
+  max-height: 240px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.detection-list li {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  font-size: 0.85rem;
 }

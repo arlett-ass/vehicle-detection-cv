@@ -6,11 +6,17 @@
  */
 
 const imageInput = document.querySelector("#image-input");
+const cameraInput = document.querySelector("#camera-input");
 const preview = document.querySelector("#preview");
 const statusElement = document.querySelector("#status");
 
 const analyzeButton = document.querySelector("#analyze-button");
 const canvas = document.querySelector("#detection-canvas");
+
+const imageComparison = document.querySelector("#image-comparison");
+const analysisPanel = document.querySelector("#analysis-panel");
+const detectionDetails = document.querySelector("#detection-details");
+const detectionList = document.querySelector("#detection-list");
 
 const emptyState = document.querySelector("#empty-state");
 
@@ -53,8 +59,10 @@ function setState(state, message) {
 
   analyzeButton.disabled = currentImage === null || analysisInProgress;
   imageInput.disabled = analysisInProgress;
+  cameraInput.disabled = analysisInProgress;
 
   emptyState.hidden = currentImage !== null;
+  imageComparison.hidden = currentImage === null;
 }
 
 /**
@@ -62,6 +70,9 @@ function setState(state, message) {
  */
 function resetResults() {
   canvas.hidden = true;
+  analysisPanel.hidden = true;
+  detectionDetails.hidden = true;
+  detectionList.replaceChildren();
 
   const context = canvas.getContext("2d");
 
@@ -156,11 +167,12 @@ function loadImage(url) {
  * Descarta cualquier respuesta de una selección anterior.
  */
 async function handleImageSelection() {
+  const selectedInput = event.currentTarget;
   const requestId = ++selectionId;
 
   clearImage();
 
-  const file = imageInput.files[0];
+  const file = selectedInput.files[0];
 
   if (!file) {
     setState(
@@ -173,7 +185,7 @@ async function handleImageSelection() {
   const validationError = validateFile(file);
 
   if (validationError !== null) {
-    imageInput.value = "";
+    selectedInput.value = "";
     setState(STATES.ERROR, validationError);
     return;
   }
@@ -206,7 +218,7 @@ async function handleImageSelection() {
     }
 
     clearImage();
-    imageInput.value = "";
+    selectedInput.value = "";
 
     setState(
       STATES.ERROR,
@@ -215,6 +227,35 @@ async function handleImageSelection() {
 
     console.error("Error al cargar la fotografía:", error);
   }
+}
+
+function showDetectionDetails(detections) {
+  const labels = {
+    car: "Automóvil",
+    motorcycle: "Motocicleta",
+    bus: "Autobús",
+    truck: "Camión",
+  };
+
+  detectionList.replaceChildren();
+
+  detections.forEach((detection, index) => {
+    const item = document.createElement("li");
+    const confidence = Math.round(detection.score * 100);
+
+    item.textContent =
+      `#${index + 1} · ${labels[detection.class]} · ${confidence} %`;
+
+    detectionList.append(item);
+  });
+
+  if (detections.length === 0) {
+    const item = document.createElement("li");
+    item.textContent = "No se detectaron vehículos.";
+    detectionList.append(item);
+  }
+
+  detectionDetails.hidden = false;
 }
 
 /**
@@ -259,10 +300,7 @@ async function handleAnalysis() {
 
     setState(STATES.ANALYZING, "Analizando vehículos...");
 
-    const detections = await detector.detectVehicles(
-      imageToAnalyze,
-      0.5
-    );
+    const detections = await detector.detectVehicles(imageToAnalyze);
 
     if (requestId !== selectionId) {
       return;
@@ -281,8 +319,11 @@ async function handleAnalysis() {
     }
 
     showCounts(counts);
+    showDetectionDetails(detections);
+
     canvas.hidden = false;
-    preview.hidden = true;
+    analysisPanel.hidden = false;
+    preview.hidden = false;
 
     setState(
       STATES.FINISHED,
@@ -311,6 +352,7 @@ async function handleAnalysis() {
 }
 
 imageInput.addEventListener("change", handleImageSelection);
+cameraInput.addEventListener("change", handleImageSelection);
 analyzeButton.addEventListener("click", handleAnalysis);
 
 setState(
