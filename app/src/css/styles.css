@@ -568,6 +568,45 @@ input:focus-visible {
   color: var(--muted);
   font-size: 0.75rem;
 }
+
+.page-footer {
+  flex-wrap: wrap;
+}
+
+.icon-credits {
+  flex-basis: 100%;
+  min-width: 0;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border, #d9dde3);
+}
+
+.icon-credits h2 {
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+.icon-credits ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.icon-credits a {
+  color: var(--muted, #626b75);
+  font-size: 0.8rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.icon-credits a:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
 /* Iconos y leyendas alineados */
 .vehicle-icon {
   display: block;
@@ -638,6 +677,8 @@ input:focus-visible {
   width: 22px;
   height: 22px;
 }
+
+
 
 /* Dos tarjetas por fila para dar espacio a las leyendas */
 @media (max-width: 1200px) {
