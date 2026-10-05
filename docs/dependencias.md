@@ -62,10 +62,12 @@ simultáneas y posteriores reutilizan esa promesa; si falla, la caché se libera
 Se espera `tf.ready()` antes de descargar el modelo. No se hace `dispose()` por
 fotografía porque el modelo se conserva para el siguiente análisis.
 
-`detectVehicles(image, minConfidence = 0.5)` recibe un `HTMLImageElement` ya
+`detectVehicles(image, minConfidence = DEFAULT_MIN_CONFIDENCE)`recibe un `HTMLImageElement` ya
 cargado, valida dimensiones y umbral finito entre 0 y 1, espera el modelo y llama
 a `model.detect(image, 100, minConfidence)`. Devuelve únicamente `car`,
 `motorcycle`, `bus` y `truck` cuyo `score >= minConfidence`.
+El valor actual de `DEFAULT_MIN_CONFIDENCE` es 0.4.
+Una llamada puede proporcionar otro umbral explícitamente.
 
 Cada resultado conserva `{ class, score, bbox: [x, y, ancho, alto] }` y copia el
 recuadro sin modificar la predicción original. Las coordenadas están en píxeles
@@ -74,9 +76,11 @@ se propagan a `app.js`; no se convierten en una falsa detección de cero vehícu
 
 ## Parámetros y límites
 
-- Umbral inicial: **0.5**, conforme al contrato del equipo. Consultar la
-  comparación de 0.3, 0.5 y 0.7 en `pruebas-detector.md`; no es una calibración
-  estadística ni una garantía de precisión.
+- Umbral predeterminado actual: **0.4**. Se ajustó durante las pruebas
+  exploratorias del prototipo. Este valor no representa una calibración
+  estadística ni garantiza precisión. Las comparaciones anteriores de
+  0.3, 0.5 y 0.7 se conservan como antecedentes en pruebas-detector.md.
+  La configuración final debe evaluarse con fotografías y conteos manuales.
 - `MAX_NUM_BOXES = 100`: evita el tope predeterminado de 20. Limita todas las
   detecciones del modelo **antes** de filtrar vehículos. Otros objetos pueden
   ocupar plazas; no garantiza detectar 100 vehículos ni contar escenas completas.
@@ -109,6 +113,8 @@ implementados e integrados para completar el recorrido de la aplicación.
 
 Para modificar el detector: ajustar las constantes exportadas, ejecutar
 `node --test tests/detector.test.mjs`, repetir `tests/detector-browser.html`
-y registrar los resultados. Si cambia el umbral predeterminado, coordinar también
-el `0.5` explícito que actualmente pasa `app.js`. No modificar los filtros del
-contador ni del dibujo: ambos deben consumir la lista entregada por el detector.
+y registrar los resultados. Si cambia el umbral predeterminado, revisar las llamadas desde app.js.
+Para utilizar la configuración del detector, llamar a
+`detectVehicles(image)` sin un umbral explícito. Si la interfaz proporciona
+un umbral, documentarlo y comprobar que coincida con la configuración
+evaluada.

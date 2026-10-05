@@ -1,5 +1,5 @@
 /** Detección en el navegador; no entrena ni envía la fotografía a un servidor. */
-export const DEFAULT_MIN_CONFIDENCE = 0.5;
+export const DEFAULT_MIN_CONFIDENCE = 0.4;
 // El límite se aplica a TODAS las clases antes de filtrar vehículos.
 export const MAX_NUM_BOXES = 100;
 export const MODEL_BASE = "lite_mobilenet_v2";
