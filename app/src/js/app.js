@@ -166,7 +166,7 @@ function loadImage(url) {
  * Valida y carga la nueva fotografía.
  * Descarta cualquier respuesta de una selección anterior.
  */
-async function handleImageSelection() {
+async function handleImageSelection(event) {
   const selectedInput = event.currentTarget;
   const requestId = ++selectionId;
 
@@ -337,10 +337,9 @@ async function handleAnalysis() {
     resetResults();
 
     const message = error.message === "MODULES_PENDING"
-      ? "La imagen está lista, pero los módulos de detección, " +
-        "conteo y dibujo todavía no están integrados."
-      : "No se pudo completar el análisis. Revisa la conexión " +
-        "e inténtalo nuevamente.";
+      ? "Los módulos de detección, conteo y dibujo no están disponibles."
+      : "No se pudo completar el análisis. Inténtalo nuevamente; " +
+    "si persiste, revisa el error en la consola.";
 
     setState(STATES.ERROR, message);
 

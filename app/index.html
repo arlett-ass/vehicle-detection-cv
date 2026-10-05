@@ -46,22 +46,52 @@
           </p>
 
           <div class="upload-box">
-            <span class="upload-icon" aria-hidden="true">
+            <div class="upload-intro">
               <img
-                  class="vehicle-icon"
-                  src="./public/assets/icons/subir.png"
-                  alt=""
-                  aria-hidden="true"
+                class="upload-intro-icon"
+                src="./public/assets/icons/subir.png"
+                alt=""
+                aria-hidden="true"
+              >
+
+              <div>
+                <h3>Agrega tu fotografía</h3>
+                <p id="file-help">JPG o PNG · Hasta 10 MB</p>
+              </div>
+            </div>
+
+            <div class="photo-options">
+              <div class="photo-option">
+                <label for="image-input">Desde tu dispositivo</label>
+
+                <p id="gallery-help" class="photo-option-description">
+                  Selecciona una fotografía almacenada.
+                </p>
+
+                <input
+                  id="image-input"
+                  type="file"
+                  accept="image/jpeg,image/png"
+                  aria-describedby="file-help gallery-help"
                 >
-            </span>
-            <label for="image-input">Elige una imagen de tu dispositivo</label>
-            <p id="file-help">JPG o PNG · Hasta 10 MB</p>
+              </div>
 
-            <input id="image-input" type="file" accept="image/jpeg,image/png" aria-describedby="file-help" >
+              <div class="photo-option">
+                <label for="camera-input">Desde la cámara</label>
 
-            <label class="camera-button" for="camera-input">Tomar fotografía</label>
+                <p id="camera-help" class="photo-option-description">
+                  Toma una fotografía en dispositivos compatibles.
+                </p>
 
-            <input id="camera-input" type="file" accept="image/jpeg,image/png" capture="environment" hidden>
+                <input
+                  id="camera-input"
+                  type="file"
+                  accept="image/*"
+                  capture="environment"
+                  aria-describedby="file-help camera-help"
+                >
+              </div>
+            </div>
           </div>
 
           <button id="analyze-button" type="button" disabled>
