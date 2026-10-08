@@ -1,0 +1,24 @@
+Ô£ö devuelve todos los conteos en cero cuando la lista est├í vac├¡a (1.2262ms)
+Ô£ö cuenta correctamente una sola categor├¡a (0.1377ms)
+Ô£ö cuenta correctamente una mezcla de categor├¡as (0.1281ms)
+Ô£ö cuenta varios objetos de una misma categor├¡a (0.8391ms)
+Ô£ö no modifica la lista de detecciones recibida (0.2754ms)
+Ô£ö carga concurrente comparte promesa y espera al backend (3.6166ms)
+Ô£ö fallo de descarga compartido permite un reintento posterior (1.3601ms)
+Ô£ö bibliotecas ausentes y fallo del backend no envenenan la cach├® (1.2209ms)
+Ô£ö filtra cuatro categor├¡as y umbral inclusivo sin modificar predicciones (1.6188ms)
+Ô£ö dos an├ílisis reutilizan el modelo y pasan imagen, l├¡mite 100 y umbral (0.8712ms)
+Ô£ö no trunca en 20 una lista densa simulada (1.1ms)
+Ô£ö lista vac├¡a y objetos ajenos a veh├¡culos devuelven cero detecciones (0.7608ms)
+Ô£ö fallo de inferencia llega al coordinador y no vuelve a descargar el modelo (0.71ms)
+Ô£ö rechaza im├ígenes no cargadas y umbrales inv├ílidos antes de descargar (0.9102ms)
+Ô£ö acepta los extremos 0 y 1 del umbral (0.8324ms)
+Ô£ö usa 0.4 como umbral predeterminado y acepta su l├¡mite (0.6747ms)
+Ôä╣ tests 16
+Ôä╣ suites 0
+Ôä╣ pass 16
+Ôä╣ fail 0
+Ôä╣ cancelled 0
+Ôä╣ skipped 0
+Ôä╣ todo 0
+Ôä╣ duration_ms 108.6898
