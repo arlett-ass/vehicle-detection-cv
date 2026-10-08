@@ -1,0 +1,42 @@
+INFORME DE ENTORNO QA
+Fecha: 08/10/2026
+
+Responsable:
+Nicolás David Juárez Mendoza
+
+Repositorio:
+https://github.com/arlett-ass/vehicle-detection-cv
+
+Rama de trabajo:
+feat/david-qa-report
+
+Sistema operativo:
+Microsoft Windows 11 Pro
+Versión: 10.0.26200
+Build: 26200
+
+Node.js:
+v24.14.0
+
+Git:
+2.54.0.windows.1
+
+Visual Studio Code:
+1.140.0
+Arquitectura: x64
+
+PowerShell:
+7.6.6
+
+Google Chrome:
+154.0.8037.98
+
+Detector:
+COCO-SSD
+Modelo base: lite_mobilenet_v2
+Confianza mínima predeterminada: 0.4
+Máximo de detecciones: 100
+
+Carga de archivos:
+JPG/JPEG y PNG
+Tamaño máximo: 10 MB
