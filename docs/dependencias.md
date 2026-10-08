@@ -63,8 +63,9 @@ Se espera `tf.ready()` antes de descargar el modelo. No se hace `dispose()` por
 fotografía porque el modelo se conserva para el siguiente análisis.
 
 `detectVehicles(image, minConfidence = DEFAULT_MIN_CONFIDENCE)`recibe un `HTMLImageElement` ya
-cargado, valida dimensiones y umbral finito entre 0 y 1, espera el modelo y llama
-a `model.detect(image, 100, minConfidence)`. Devuelve únicamente `car`,
+cargado, valida dimensiones y umbral finito entre 0 y 1 y espera el modelo.
+Analiza la vista original y hasta cinco vistas auxiliares con
+`model.detect(vista, 100, minConfidence)`. Devuelve únicamente `car`,
 `motorcycle`, `bus` y `truck` cuyo `score >= minConfidence`.
 El valor actual de `DEFAULT_MIN_CONFIDENCE` es 0.4.
 Una llamada puede proporcionar otro umbral explícitamente.
@@ -73,6 +74,26 @@ Cada resultado conserva `{ class, score, bbox: [x, y, ancho, alto] }` y copia el
 recuadro sin modificar la predicción original. Las coordenadas están en píxeles
 naturales, no en el tamaño CSS. La lista vacía es un resultado válido. Los fallos
 se propagan a `app.js`; no se convierten en una falsa detección de cero vehículos.
+
+## Imágenes oscuras y vehículos pequeños
+
+El detector estima la luminancia con una muestra de 64 x 64 píxeles. Cuando la
+media es inferior a 90/255, crea una copia con corrección gamma 0.6 para aclarar
+sombras. Conserva también la inferencia original y no modifica la fotografía.
+Si ambos lados miden al menos 320 píxeles, analiza cuatro recortes solapados
+que ocupan el 60 % del ancho y alto. Las copias auxiliares tienen un lado máximo
+de 1280 píxeles; los recuadros se convierten a coordenadas de la imagen original.
+
+Se descartan propuestas cortadas por bordes internos de los recortes y se unen
+recuadros con IoU superior a 0.5, conservando la mayor confianza incluso entre
+categorías diferentes. El resultado final contiene como máximo 100 vehículos.
+Conteo y dibujo reciben esa misma lista. El modelo se reutiliza y las llamadas
+son secuenciales: son hasta seis inferencias por foto, por lo que el análisis
+puede tardar más. Los comentarios de detector.js explican estas constantes.
+
+Aclarar no recupera detalles inexistentes. Las oclusiones, ruido, faros y objetos
+muy pequeños todavía pueden causar omisiones o errores. La eliminación de
+solapamientos no garantiza separar dos vehículos que el modelo puso en una caja.
 
 ## Parámetros y límites
 
@@ -114,6 +135,9 @@ implementados e integrados para completar el recorrido de la aplicación.
 Para modificar el detector: ajustar las constantes exportadas, ejecutar
 `node --test tests/detector.test.mjs`, repetir `tests/detector-browser.html`
 y registrar los resultados. Si cambia el umbral predeterminado, revisar las llamadas desde app.js.
+Para comparar la inferencia original con las vistas adicionales, servir el
+repositorio por HTTP y abrir `tests/detector-low-light.html`. Incluye fotografías
+nocturnas, un camión y un control sin vehículos; revisar los recuadros, no solo el total.
 Para utilizar la configuración del detector, llamar a
 `detectVehicles(image)` sin un umbral explícito. Si la interfaz proporciona
 un umbral, documentarlo y comprobar que coincida con la configuración
