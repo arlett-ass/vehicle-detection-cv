@@ -1,0 +1,19 @@
+Ô£ö carga concurrente comparte promesa y espera al backend (4.0512ms)
+Ô£ö fallo de descarga compartido permite un reintento posterior (4.5753ms)
+Ô£ö bibliotecas ausentes y fallo del backend no envenenan la cach├® (1.3607ms)
+Ô£ö filtra cuatro categor├¡as y umbral inclusivo sin modificar predicciones (2.3786ms)
+Ô£ö dos an├ílisis reutilizan el modelo y pasan imagen, l├¡mite 100 y umbral (0.9266ms)
+Ô£ö no trunca en 20 una lista densa simulada (1.0425ms)
+Ô£ö lista vac├¡a y objetos ajenos a veh├¡culos devuelven cero detecciones (0.7506ms)
+Ô£ö fallo de inferencia llega al coordinador y no vuelve a descargar el modelo (0.7953ms)
+Ô£ö rechaza im├ígenes no cargadas y umbrales inv├ílidos antes de descargar (0.8624ms)
+Ô£ö acepta los extremos 0 y 1 del umbral (0.8632ms)
+Ô£ö usa 0.4 como umbral predeterminado y acepta su l├¡mite (0.6887ms)
+Ôä╣ tests 11
+Ôä╣ suites 0
+Ôä╣ pass 11
+Ôä╣ fail 0
+Ôä╣ cancelled 0
+Ôä╣ skipped 0
+Ôä╣ todo 0
+Ôä╣ duration_ms 121.2588

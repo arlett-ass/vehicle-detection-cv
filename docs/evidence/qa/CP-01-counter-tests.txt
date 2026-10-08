@@ -1,0 +1,13 @@
+Ô£ö devuelve todos los conteos en cero cuando la lista est├í vac├¡a (2.8107ms)
+Ô£ö cuenta correctamente una sola categor├¡a (0.1573ms)
+Ô£ö cuenta correctamente una mezcla de categor├¡as (0.1317ms)
+Ô£ö cuenta varios objetos de una misma categor├¡a (1.6173ms)
+Ô£ö no modifica la lista de detecciones recibida (0.439ms)
+Ôä╣ tests 5
+Ôä╣ suites 0
+Ôä╣ pass 5
+Ôä╣ fail 0
+Ôä╣ cancelled 0
+Ôä╣ skipped 0
+Ôä╣ todo 0
+Ôä╣ duration_ms 106.8925
