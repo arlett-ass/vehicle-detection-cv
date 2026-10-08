@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comparación del detector</title>
+<style>body{font:16px system-ui;max-width:1000px;margin:30px auto;padding:16px}pre{white-space:pre-wrap}canvas{max-width:100%;height:auto}button{padding:12px}</style>
+<h1>Comparación con fotografías del equipo</h1>
+<p>Compara una inferencia original con el detector que analiza sombras y recortes.
+Los conteos no representan una medida de precisión. Requiere internet para los pesos.</p>
+<button id="run" disabled>Comparar detector</button>
+<p id="status" role="status">Cargando bibliotecas...</p>
+<pre id="results"></pre>
+<div id="images"></div>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js"></script>
+<script type="module">
+import { loadModel, detectVehicles, DEFAULT_MIN_CONFIDENCE, MAX_NUM_BOXES } from "../app/src/js/detector.js";
+import { renderDetections } from "../app/src/js/renderer.js";
+const button = document.querySelector("#run");
+const status = document.querySelector("#status");
+const results = document.querySelector("#results");
+const images = document.querySelector("#images");
+const files = ["001_sin_carros.jpg", "005_carros-noche.jpg", "006_camion.jpg", "010_altocontraste_quemada.jpg"];
+const classes = new Set(["car", "motorcycle", "bus", "truck"]);
+button.disabled = false;
+status.textContent = "Lista para comparar cuatro fotografías locales.";
+button.addEventListener("click", async () => {
+  button.disabled = true;
+  images.replaceChildren();
+  const report = { threshold: DEFAULT_MIN_CONFIDENCE, cases: [] };
+  try {
+    const model = await loadModel();
+    report.backend = tf.getBackend();
+    report.userAgent = navigator.userAgent;
+    for (const file of files) {
+      status.textContent = "Analizando " + file;
+      const image = new Image();
+      image.src = "../data/test/imagenes/" + file;
+      await image.decode();
+      const before = (await model.detect(image, MAX_NUM_BOXES, DEFAULT_MIN_CONFIDENCE))
+        .filter(item => classes.has(item.class) && item.score >= DEFAULT_MIN_CONFIDENCE);
+      const start = performance.now();
+      const after = await detectVehicles(image);
+      report.cases.push({ file, before: before.length, after: after.length,
+        milliseconds: Math.round(performance.now() - start) });
+      const heading = document.createElement("h2");
+      heading.textContent = file + ": " + before.length + " → " + after.length;
+      const canvas = document.createElement("canvas");
+      renderDetections(canvas, image, after);
+      images.append(heading, canvas);
+      results.textContent = JSON.stringify(report, null, 2);
+    }
+    status.textContent = "Comparación terminada. Revisar visualmente las detecciones.";
+  } catch (error) {
+    report.error = error.message;
+    status.textContent = "No se pudo completar la comparación: " + error.message;
+  } finally {
+    results.textContent = JSON.stringify(report, null, 2);
+    button.disabled = false;
+  }
+});
+</script>
+</html>
