@@ -1,359 +1,420 @@
+
+/* Aplica el modelo de caja border-box para facilitar el cálculo de tamaños. */
 * {
   box-sizing: border-box;
-  }
+}
 
+/* Variables globales para mantener una paleta de colores uniforme. */
 :root {
---background: #f4f5f7;
---surface: #ffffff;
---surface-soft: #f8f9fa;
---border: #d9dde3;
---text: #20252b;
---muted: #626b75;
---primary: #1f2937;
---primary-hover: #111827;
---success: #166534;
---warning: #92400e;
+  --background: #f4f5f7;
+  --surface: #ffffff;
+  --surface-soft: #f8f9fa;
+  --border: #d9dde3;
+  --text: #20252b;
+  --muted: #626b75;
+  --primary: #1f2937;
+  --primary-hover: #111827;
+  --success: #166534;
+  --warning: #92400e;
 }
 
+/* Configuración general de la página. */
 body {
-margin: 0;
-min-width: 320px;
-font-family: Arial, Helvetica, sans-serif;
-background: var(--background);
-color: var(--text);
-line-height: 1.5;
+  margin: 0;
+  min-width: 320px;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  color: var(--text);
+  line-height: 1.5;
 }
 
+/* Mantiene la tipografía de los controles consistente con la página. */
 button,
 input {
-font: inherit;
+  font: inherit;
 }
 
+/* Limita el ancho del contenido y centra la interfaz. */
 .container {
-width: min(1180px, 100%);
-margin: 0 auto;
-padding: 32px 24px 48px;
+  width: min(1180px, 100%);
+  margin: 0 auto;
+  padding: 32px 24px 48px;
 }
 
+/* Separa el encabezado de las secciones principales. */
 .page-header {
-margin-bottom: 28px;
+  margin-bottom: 28px;
 }
 
+/* Estilo de los textos pequeños que identifican títulos y secciones. */
 .eyebrow,
 .section-number {
-margin: 0 0 6px;
-font-size: 0.75rem;
-font-weight: 700;
-letter-spacing: 0.08em;
-text-transform: uppercase;
-color: var(--muted);
+  margin: 0 0 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
+/* Elimina el margen superior predeterminado de los textos y encabezados. */
 h1,
 h2,
 h3,
 p {
-margin-top: 0;
+  margin-top: 0;
 }
 
+/* Ajusta el tamaño y el espacio del título principal. */
 h1 {
-margin-bottom: 10px;
-font-size: clamp(2rem, 4vw, 3rem);
-line-height: 1.1;
+  margin-bottom: 10px;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
 }
 
+/* Define el tamaño de los encabezados secundarios. */
 h2 {
-margin-bottom: 0;
-font-size: 1.25rem;
+  margin-bottom: 0;
+  font-size: 1.25rem;
 }
 
+/* Define el tamaño de los encabezados de menor nivel. */
 h3 {
-margin-bottom: 8px;
-font-size: 1rem;
+  margin-bottom: 8px;
+  font-size: 1rem;
 }
 
+/* Limita el ancho de la descripción para facilitar su lectura. */
 .description {
-max-width: 720px;
-margin-bottom: 0;
-color: var(--muted);
+  max-width: 720px;
+  margin-bottom: 0;
+  color: var(--muted);
 }
 
+/* Apariencia compartida por los paneles principales y las limitaciones. */
 .panel,
 .limitations {
-background: var(--surface);
-border: 1px solid var(--border);
-border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
 }
 
+/* Espaciado interior y separación entre los paneles. */
 .panel {
-padding: 24px;
-margin-bottom: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
 }
 
+/* Alinea los encabezados de las secciones. */
 .section-header,
 .results-header {
-display: flex;
-align-items: flex-start;
-justify-content: space-between;
-margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
+/* Separa el campo de selección del siguiente elemento. */
 .control-group {
-margin-bottom: 18px;
+  margin-bottom: 18px;
 }
 
+/* Presenta las etiquetas de los campos en una línea independiente. */
 label {
-display: block;
-margin-bottom: 8px;
-font-weight: 700;
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 700;
 }
 
+/* Da formato al selector de archivos de imagen. */
 input[type="file"] {
-width: 100%;
-max-width: 620px;
-padding: 10px;
-border: 1px solid var(--border);
-border-radius: 8px;
-background: var(--surface-soft);
+  width: 100%;
+  max-width: 620px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface-soft);
 }
 
+/* Atenúa el selector cuando está deshabilitado. */
 input[type="file"]:disabled {
-opacity: 0.6;
-cursor: not-allowed;
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
+/* Deja espacio entre el botón de análisis y el mensaje de estado. */
 .action-area {
-margin-bottom: 16px;
+  margin-bottom: 16px;
 }
 
+/* Estilo base del botón para iniciar el análisis. */
 button {
-min-height: 44px;
-padding: 10px 18px;
-border: 0;
-border-radius: 8px;
-background: var(--primary);
-color: white;
-font-weight: 700;
-cursor: pointer;
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--primary);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
 }
 
+/* Cambia el color del botón al pasar el cursor si está habilitado. */
 button:hover:not(:disabled) {
-background: var(--primary-hover);
+  background: var(--primary-hover);
 }
 
+/* Indica visualmente que el botón no está disponible. */
 button:disabled {
-opacity: 0.5;
-cursor: not-allowed;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
+/* Resalta los campos y botones cuando reciben el foco mediante el teclado. */
 button:focus-visible,
 input:focus-visible {
-outline: 3px solid #93c5fd;
-outline-offset: 2px;
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
 }
 
+/* Área destinada a mostrar mensajes sobre el estado de la aplicación. */
 .status {
-min-height: 24px;
-margin-bottom: 0;
-padding: 10px 12px;
-border-left: 4px solid var(--border);
-background: var(--surface-soft);
-color: var(--muted);
+  min-height: 24px;
+  margin-bottom: 0;
+  padding: 10px 12px;
+  border-left: 4px solid var(--border);
+  background: var(--surface-soft);
+  color: var(--muted);
 }
 
+/* Indicador visual para el estado en el que la imagen está lista. */
 .status[data-state="imagen-lista"] {
-border-left-color: var(--success);
+  border-left-color: var(--success);
 }
 
+/* Indicador para los estados relacionados con la carga y el análisis. */
 .status[data-state="analizando"],
 .status[data-state="cargando-modelo"],
 .status[data-state="cargando-imagen"] {
-border-left-color: var(--warning);
+  border-left-color: var(--warning);
 }
 
+/* Indicador visual para los mensajes de error. */
 .status[data-state="error"] {
-border-left-color: #b91c1c;
+  border-left-color: #b91c1c;
 }
 
+/* Distribuye el área de visualización y los resultados en dos columnas. */
 .visualization-area {
-display: grid;
-grid-template-columns: minmax(0, 1fr) 300px;
-gap: 24px;
-align-items: start;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 24px;
+  align-items: start;
 }
 
+/* Contenedor que centra la imagen o el mensaje inicial.
+   También evita que el contenido sobresalga de sus límites. */
 .canvas-container {
-position: relative;
-display: flex;
-align-items: center;
-justify-content: center;
-width: 100%;
-min-height: 360px;
-overflow: hidden;
-border: 1px solid var(--border);
-border-radius: 10px;
-background: #eceff2;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 360px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #eceff2;
 }
 
+/* Ajusta la imagen y el canvas al ancho disponible sin deformarlos. */
 #preview,
 #detection-canvas {
-display: block;
-width: 100%;
-max-width: 100%;
-height: auto;
-max-height: 650px;
-object-fit: contain;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 650px;
+  object-fit: contain;
 }
 
+/* Presentación del mensaje que se muestra cuando aún no hay una imagen. */
 .empty-state {
-max-width: 360px;
-padding: 32px 24px;
-text-align: center;
-color: var(--muted);
+  max-width: 360px;
+  padding: 32px 24px;
+  text-align: center;
+  color: var(--muted);
 }
 
+/* Ajusta el tamaño del símbolo decorativo del estado vacío. */
 .empty-icon {
-display: block;
-margin-bottom: 14px;
-font-size: 2.5rem;
-line-height: 1;
+  display: block;
+  margin-bottom: 14px;
+  font-size: 2.5rem;
+  line-height: 1;
 }
 
+/* Elimina el margen inferior del texto del estado vacío. */
 .empty-state p {
-margin-bottom: 0;
+  margin-bottom: 0;
 }
 
+/* Evita que el panel de resultados se reduzca por debajo de su contenido. */
 .results-panel {
-min-width: 0;
+  min-width: 0;
 }
 
+/* Organiza verticalmente el encabezado del panel de resultados. */
 .results-header {
-display: block;
-margin-bottom: 16px;
+  display: block;
+  margin-bottom: 16px;
 }
 
+/* Distribuye las tarjetas de conteo en dos columnas. */
 .results-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
+/* Estilo individual de las tarjetas de conteo por categoría. */
 .count-card {
-min-width: 0;
-padding: 16px;
-border: 1px solid var(--border);
-border-radius: 10px;
-background: var(--surface-soft);
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-soft);
 }
 
+/* Presenta el nombre de cada categoría sobre su cantidad. */
 .count-label {
-display: block;
-margin-bottom: 8px;
-color: var(--muted);
-font-size: 0.85rem;
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.85rem;
 }
 
+/* Destaca visualmente los números de las tarjetas. */
 .count-card strong {
-display: block;
-font-size: 1.8rem;
-line-height: 1;
+  display: block;
+  font-size: 1.8rem;
+  line-height: 1;
 }
 
+/* Resalta la tarjeta que muestra la cantidad total de vehículos. */
 .total-card {
-display: flex;
-align-items: center;
-justify-content: space-between;
-gap: 16px;
-margin-top: 10px;
-padding: 16px;
-border-radius: 10px;
-background: var(--primary);
-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 10px;
+  padding: 16px;
+  border-radius: 10px;
+  background: var(--primary);
+  color: white;
 }
 
+/* Define el tamaño de la cifra total. */
 .total-card strong {
-font-size: 1.8rem;
+  font-size: 1.8rem;
 }
 
+/* Presentación de la nota que advierte sobre posibles errores del modelo. */
 .result-note {
-margin: 14px 0 0;
-font-size: 0.85rem;
-color: var(--muted);
+  margin: 14px 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
 }
 
+/* Espaciado interior de la sección de limitaciones del prototipo. */
 .limitations {
-padding: 22px 24px;
+  padding: 22px 24px;
 }
 
+/* Separa el título de la lista de limitaciones. */
 .limitations h2 {
-margin-bottom: 12px;
+  margin-bottom: 12px;
 }
 
+/* Ajusta el margen, la sangría y el color de la lista. */
 .limitations ul {
-margin: 0;
-padding-left: 20px;
-color: var(--muted);
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
 }
 
+/* Separa los elementos consecutivos de la lista. */
 .limitations li + li {
-margin-top: 6px;
+  margin-top: 6px;
 }
 
+/* Garantiza que los elementos con hidden permanezcan ocultos,
+   incluso si otra regla CSS define su visualización. */
 [hidden] {
-display: none !important;
+  display: none !important;
 }
 
+/* Adaptaciones para tabletas y pantallas de hasta 820 píxeles.
+   El área visual pasa de dos columnas a una sola. */
 @media (max-width: 820px) {
-.container {
-padding: 24px 16px 36px;
+  .container {
+    padding: 24px 16px 36px;
+  }
+
+  .visualization-area {
+    grid-template-columns: 1fr;
+  }
+
+  .results-panel {
+    width: 100%;
+  }
+
+  .canvas-container {
+    min-height: 280px;
+  }
 }
 
-.visualization-area {
-grid-template-columns: 1fr;
-}
-
-.results-panel {
-width: 100%;
-}
-
-.canvas-container {
-min-height: 280px;
-}
-}
-
+/* Adaptaciones para teléfonos y pantallas de hasta 520 píxeles. */
 @media (max-width: 520px) {
-.container {
-padding: 20px 12px 28px;
-}
+  .container {
+    padding: 20px 12px 28px;
+  }
 
-.panel,
-.limitations {
-padding: 18px;
-border-radius: 10px;
-}
+  /* Reduce el espaciado interior de los paneles en móviles. */
+  .panel,
+  .limitations {
+    padding: 18px;
+    border-radius: 10px;
+  }
 
-h1 {
-font-size: 2rem;
-}
+  /* Ajusta el título principal a pantallas pequeñas. */
+  h1 {
+    font-size: 2rem;
+  }
 
-.results-grid {
-grid-template-columns: 1fr 1fr;
-}
+  /* Conserva dos columnas para las tarjetas de conteo. */
+  .results-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 
-.count-card {
-padding: 13px;
-}
+  /* Reduce el espacio interior de las tarjetas. */
+  .count-card {
+    padding: 13px;
+  }
 
-.count-card strong,
-.total-card strong {
-font-size: 1.5rem;
-}
+  /* Reduce las cifras para evitar desbordamientos. */
+  .count-card strong,
+  .total-card strong {
+    font-size: 1.5rem;
+  }
 
-.canvas-container {
-min-height: 220px;
-}
+  /* Reduce la altura mínima del área de visualización. */
+  .canvas-container {
+    min-height: 220px;
+  }
 
-button {
-width: 100%;
-}
+  /* Hace que el botón ocupe el ancho disponible en móviles. */
+  button {
+    width: 100%;
+  }
 }
